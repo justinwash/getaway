@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ck0fojnd63l4f"
-path="res://.godot/imported/wallA_window_concrete.png-8fb69bf1470b3fb3a2e7a4b418504d21.ctex"
+path.s3tc="res://.godot/imported/wallA_window_concrete.png-8fb69bf1470b3fb3a2e7a4b418504d21.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={}
 
 [deps]
 
 source_file="res://assets/kenney_retro-urban-kit/Models/GLTF format/wallA_window_concrete.png"
-dest_files=["res://.godot/imported/wallA_window_concrete.png-8fb69bf1470b3fb3a2e7a4b418504d21.ctex"]
+dest_files=["res://.godot/imported/wallA_window_concrete.png-8fb69bf1470b3fb3a2e7a4b418504d21.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -32,4 +33,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

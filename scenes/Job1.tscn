@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cmbutacwxcgd8"]
+[gd_scene load_steps=34 format=3 uid="uid://cmbutacwxcgd8"]
 
 [ext_resource type="Script" path="res://scenes/Job1.gd" id="1_66hfq"]
 [ext_resource type="Script" path="res://scenes/main_menu/Lights.gd" id="2_b0ru0"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dxr144c0erkd0" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingA.glb" id="4_7l8q4"]
 [ext_resource type="PackedScene" uid="uid://21ticwlvsj8x" path="res://assets/kenney_car-kit/Models/GLTF format/delivery.glb" id="5_vcxy2"]
 [ext_resource type="PackedScene" uid="uid://dgl5oxaswhme4" path="res://assets/kenney_car-kit/Models/GLTF format/deliveryFlat.glb" id="6_1644c"]
-[ext_resource type="PackedScene" uid="uid://cecqsbonxtux3" path="res://scenes/PlayerCar.tscn" id="6_rilby"]
 [ext_resource type="PackedScene" uid="uid://c68rq368qw54x" path="res://assets/kenney_car-kit/Models/GLTF format/hatchbackSports.glb" id="7_g8ppt"]
 [ext_resource type="PackedScene" uid="uid://ctsg26xpqgsem" path="res://assets/kenney_car-kit/Models/GLTF format/sedan.glb" id="8_uypw2"]
 [ext_resource type="PackedScene" uid="uid://cn2h7vclki7ao" path="res://assets/kenney_car-kit/Models/GLTF format/sedanSports.glb" id="9_odu7j"]
@@ -18,7 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://dj35h4lqny7ui" path="res://assets/kenney_car-kit/Models/GLTF format/van.glb" id="15_rgac2"]
 [ext_resource type="PackedScene" uid="uid://b4ej4i1yravvi" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingC.glb" id="17_qh52p"]
 [ext_resource type="PackedScene" uid="uid://dam1jdvdsx4te" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingE.glb" id="18_hembu"]
+[ext_resource type="PackedScene" uid="uid://pvlw08a0nmtm" path="res://scenes/PlayerCarControllable.tscn" id="19_1t340"]
 [ext_resource type="PackedScene" uid="uid://bouxs47idn7ls" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingG.glb" id="19_vduhg"]
+[ext_resource type="PackedScene" uid="uid://vryt1suwpotq" path="res://FloorPlane.tscn" id="20_kgrbj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_srml4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,18 +33,9 @@ background_mode = 2
 sky = SubResource("Sky_uhsll")
 tonemap_mode = 2
 ssao_enabled = true
+ssil_enabled = true
 sdfgi_enabled = true
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q0ypc"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_d6c86"]
-material = SubResource("StandardMaterial3D_q0ypc")
-size = Vector3(100, 1, 100)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_f4g7p"]
-size = Vector3(50, 1, 50)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_uy82s"]
 size = Vector2(0.2, 1.5)
@@ -67,6 +59,21 @@ noise = SubResource("FastNoiseLite_3af1f")
 albedo_color = Color(0.227451, 0.227451, 0.227451, 1)
 albedo_texture = SubResource("NoiseTexture2D_w43g0")
 
+[sub_resource type="Animation" id="Animation_mgsbp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/JobTitle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_yycq3"]
 resource_name = "title"
 length = 4.0
@@ -81,21 +88,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_mgsbp"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/JobTitle:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e6sob"]
@@ -115,19 +107,8 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_lv3ns")
 
-[node name="FloorPlane" type="StaticBody3D" parent="."]
-
-[node name="FloorPlane" type="MeshInstance3D" parent="FloorPlane"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.484304, 0)
-mesh = SubResource("BoxMesh_d6c86")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FloorPlane"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.510604, 0)
-shape = SubResource("BoxShape3D_f4g7p")
-
 [node name="Road" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.08165e-12, 3.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.0146677, 3.6)
 
 [node name="Lights" type="Node3D" parent="Road"]
 script = ExtResource("2_b0ru0")
@@ -559,9 +540,6 @@ mesh = SubResource("BoxMesh_lhotq")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
 
-[node name="Car" parent="." instance=ExtResource("6_rilby")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53637, 2.08165e-12, 14.8371)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="JobTitle" type="Control" parent="CanvasLayer"]
@@ -643,4 +621,12 @@ transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, -12.18
 transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, -13.2199, -0.010604, -1.12144)
 
 [node name="large_buildingG2" parent="." instance=ExtResource("19_vduhg")]
-transform = Transform3D(-3.49691e-07, 0, -8, 0, 8, 0, 8, 0, -3.49691e-07, 14.6344, -0.010604, 14.1067)
+transform = Transform3D(-3.49691e-07, 0, -8, 0, 8, 0, 8, 0, -3.49691e-07, 17.4377, -0.010604, 14.1067)
+
+[node name="Car" parent="." instance=ExtResource("19_1t340")]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.508379, 0.399229, 15.1023)
+
+[node name="World" parent="." instance=ExtResource("20_kgrbj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.0127, -0.469003, 19.2449)
+cast_shadow = 0

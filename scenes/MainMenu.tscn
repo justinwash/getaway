@@ -996,9 +996,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
 
 [node name="Car" parent="." instance=ExtResource("5_krevb")]
 
-[node name="body" parent="Car" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.00635e-13, 0.192308, -0.15)
-
 [node name="BackgroundAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_espqq")

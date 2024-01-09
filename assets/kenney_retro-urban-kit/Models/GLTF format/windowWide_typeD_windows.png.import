@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bseysevn86puc"
-path="res://.godot/imported/windowWide_typeD_windows.png-23311b7a6829a209c64925fdbb519774.ctex"
+path.s3tc="res://.godot/imported/windowWide_typeD_windows.png-23311b7a6829a209c64925fdbb519774.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={}
 
 [deps]
 
 source_file="res://assets/kenney_retro-urban-kit/Models/GLTF format/windowWide_typeD_windows.png"
-dest_files=["res://.godot/imported/windowWide_typeD_windows.png-23311b7a6829a209c64925fdbb519774.ctex"]
+dest_files=["res://.godot/imported/windowWide_typeD_windows.png-23311b7a6829a209c64925fdbb519774.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -32,4 +33,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

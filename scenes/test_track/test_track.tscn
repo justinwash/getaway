@@ -1,0 +1,565 @@
+[gd_scene load_steps=30 format=3 uid="uid://dfsxnp7spvncl"]
+
+[ext_resource type="PackedScene" uid="uid://vryt1suwpotq" path="res://FloorPlane.tscn" id="1_cwvg5"]
+[ext_resource type="PackedScene" uid="uid://pvlw08a0nmtm" path="res://scenes/PlayerCarControllable.tscn" id="2_twn3f"]
+[ext_resource type="Script" path="res://scenes/main_menu/Lights.gd" id="4_kom24"]
+[ext_resource type="PackedScene" uid="uid://b8u2x83eqw6vb" path="res://assets/kenney_city-kit-roads/Models/GLTF format/light_curved.glb" id="5_diss7"]
+[ext_resource type="PackedScene" uid="uid://21ticwlvsj8x" path="res://assets/kenney_car-kit/Models/GLTF format/delivery.glb" id="6_4shta"]
+[ext_resource type="PackedScene" uid="uid://dgl5oxaswhme4" path="res://assets/kenney_car-kit/Models/GLTF format/deliveryFlat.glb" id="7_tc7k0"]
+[ext_resource type="PackedScene" uid="uid://c68rq368qw54x" path="res://assets/kenney_car-kit/Models/GLTF format/hatchbackSports.glb" id="8_8t7f3"]
+[ext_resource type="PackedScene" uid="uid://ctsg26xpqgsem" path="res://assets/kenney_car-kit/Models/GLTF format/sedan.glb" id="9_c5t78"]
+[ext_resource type="PackedScene" uid="uid://cn2h7vclki7ao" path="res://assets/kenney_car-kit/Models/GLTF format/sedanSports.glb" id="10_oy7ra"]
+[ext_resource type="PackedScene" uid="uid://bfgmc6rwqria4" path="res://assets/kenney_car-kit/Models/GLTF format/suv.glb" id="11_c28ii"]
+[ext_resource type="PackedScene" uid="uid://ckc1f0tqtr6ov" path="res://assets/kenney_car-kit/Models/GLTF format/suvLuxury.glb" id="12_ttw7x"]
+[ext_resource type="PackedScene" uid="uid://d2u6nnn2qupoc" path="res://assets/kenney_car-kit/Models/GLTF format/taxi.glb" id="13_wl8m4"]
+[ext_resource type="PackedScene" uid="uid://bodi5c1bx28mo" path="res://assets/kenney_car-kit/Models/GLTF format/truck.glb" id="14_5jbla"]
+[ext_resource type="PackedScene" uid="uid://c0ji8v5gbbaja" path="res://assets/kenney_car-kit/Models/GLTF format/truckFlat.glb" id="15_fag5v"]
+[ext_resource type="PackedScene" uid="uid://dj35h4lqny7ui" path="res://assets/kenney_car-kit/Models/GLTF format/van.glb" id="16_voxmv"]
+[ext_resource type="PackedScene" uid="uid://dxr144c0erkd0" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingA.glb" id="17_f5vo7"]
+[ext_resource type="PackedScene" uid="uid://b4ej4i1yravvi" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingC.glb" id="18_72ugm"]
+[ext_resource type="PackedScene" uid="uid://dam1jdvdsx4te" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingE.glb" id="19_tf24k"]
+[ext_resource type="PackedScene" uid="uid://bouxs47idn7ls" path="res://assets/kenney_city-kit-commercial/Models/GLTF format/large_buildingG.glb" id="20_8n7qk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oo5kp"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_b5npq"]
+sky_material = SubResource("ProceduralSkyMaterial_oo5kp")
+
+[sub_resource type="Environment" id="Environment_acl6o"]
+background_mode = 2
+sky = SubResource("Sky_b5npq")
+tonemap_mode = 2
+sdfgi_use_occlusion = true
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uy82s"]
+size = Vector2(0.2, 1.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vi5hu"]
+size = Vector2(0.2, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lhotq"]
+size = Vector3(2, 1, 1.95)
+
+[sub_resource type="Gradient" id="Gradient_xmkgb"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3af1f"]
+frequency = 0.1621
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w43g0"]
+color_ramp = SubResource("Gradient_xmkgb")
+noise = SubResource("FastNoiseLite_3af1f")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ib3k"]
+albedo_color = Color(0.227451, 0.227451, 0.227451, 1)
+albedo_texture = SubResource("NoiseTexture2D_w43g0")
+
+[node name="TestTrack" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_acl6o")
+
+[node name="World" parent="." instance=ExtResource("1_cwvg5")]
+
+[node name="Car" parent="." instance=ExtResource("2_twn3f")]
+transform = Transform3D(0.999986, 0, -0.0052534, 0, 1, 0, 0.0052534, 0, 0.999986, -0.955783, 0.228749, 12.3921)
+mass = 200.0
+lights_on = true
+engine_force_value = 400
+
+[node name="Job1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.21602, 0.000984907, 0.412155)
+
+[node name="Road" type="Node3D" parent="Job1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.0225766, 3.6)
+
+[node name="Lights" type="Node3D" parent="Job1/Road"]
+script = ExtResource("4_kom24")
+
+[node name="light_curved12" parent="Job1/Road/Lights" instance=ExtResource("5_diss7")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, -9.37933, 2.08165e-12, 24)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Job1/Road/Lights/light_curved12"]
+transform = Transform3D(2.08165e-12, 9.09917e-20, 3.97737e-27, 0, -9.09917e-20, 2.08165e-12, 9.09917e-20, -2.08165e-12, -9.09917e-20, -5.96046e-08, 0.630467, 0.920992)
+light_color = Color(0.972549, 0.890196, 0.560784, 1)
+light_energy = 3.0
+light_indirect_energy = 5.0
+light_size = 0.131
+light_specular = 1.0
+shadow_enabled = true
+spot_range = 7.691
+spot_attenuation = 0.153893
+spot_angle = 39.15
+spot_angle_attenuation = 0.353553
+
+[node name="light_curved4" parent="Job1/Road/Lights" instance=ExtResource("5_diss7")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, -9.37933, 2.08165e-12, -12)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Job1/Road/Lights/light_curved4"]
+transform = Transform3D(2.08165e-12, 9.09917e-20, 3.97737e-27, 0, -9.09917e-20, 2.08165e-12, 9.09917e-20, -2.08165e-12, -9.09917e-20, -5.96046e-08, 0.630467, 0.920992)
+light_color = Color(0.972549, 0.890196, 0.560784, 1)
+light_energy = 3.0
+light_indirect_energy = 5.0
+light_size = 0.131
+light_specular = 1.0
+shadow_enabled = true
+spot_range = 7.691
+spot_attenuation = 0.153893
+spot_angle = 39.15
+spot_angle_attenuation = 0.353553
+
+[node name="light_curved7" parent="Job1/Road/Lights" instance=ExtResource("5_diss7")]
+transform = Transform3D(1.04907e-06, 0, -8, 0, 8, 0, 8, 0, 1.04907e-06, 12.5, 2.08165e-12, 6)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Job1/Road/Lights/light_curved7"]
+transform = Transform3D(2.08165e-12, 9.09917e-20, 3.97737e-27, 0, -9.09917e-20, 2.08165e-12, 9.09917e-20, -2.08165e-12, -9.09917e-20, -5.96046e-08, 0.630467, 0.920992)
+light_color = Color(0.972549, 0.890196, 0.560784, 1)
+light_energy = 3.0
+light_indirect_energy = 5.0
+light_size = 0.131
+light_specular = 1.0
+shadow_enabled = true
+spot_range = 7.691
+spot_attenuation = 0.153893
+spot_angle = 39.15
+spot_angle_attenuation = 0.353553
+
+[node name="Lines" type="Node3D" parent="Job1/Road"]
+
+[node name="Lines2" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 3)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines17" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.923981, 0.0297623, 3)
+mesh = SubResource("PlaneMesh_vi5hu")
+skeleton = NodePath("../..")
+
+[node name="Lines18" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.07602, 0.0297623, 3)
+mesh = SubResource("PlaneMesh_vi5hu")
+skeleton = NodePath("../..")
+
+[node name="Lines3" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, -3)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines4" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 0)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines5" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, -6)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines6" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, -12)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines7" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, -9)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines14" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, -15)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines15" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, -21)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines16" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, -18)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines8" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 21)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines9" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 15)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines10" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 18)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines11" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 12)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines12" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 6)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Lines13" type="MeshInstance3D" parent="Job1/Road/Lines"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57602, 0.0297623, 9)
+mesh = SubResource("PlaneMesh_uy82s")
+skeleton = NodePath("../..")
+
+[node name="Buildings" type="Node3D" parent="Job1/Road"]
+
+[node name="Sidewalk" type="Node3D" parent="Job1/Road"]
+
+[node name="Sidewalk" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 0)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk2" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -2)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk3" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -4)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk4" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -6)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk13" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 8)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk14" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 6)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk15" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 4)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk16" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 2)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk17" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 16)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk18" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 14)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk19" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 12)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk20" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 10)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk21" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 24)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk22" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 22)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk23" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 20)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk24" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, 18)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk5" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -8)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk6" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -10)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk7" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -12)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk8" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -14)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk9" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -16)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk10" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -18)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk11" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -20)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk12" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.453337, -22)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk25" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 0)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk26" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -2)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk27" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -4)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk28" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -6)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk29" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 8)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk30" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 6)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk31" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 4)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk32" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 2)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk33" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 16)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk34" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 14)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk35" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 12)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk36" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 10)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk37" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 24)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk38" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 22)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk39" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 20)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk40" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, 18)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk41" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -8)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk42" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -10)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk43" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -12)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk44" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -14)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk45" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -16)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk46" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -18)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk47" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -20)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Sidewalk48" type="MeshInstance3D" parent="Job1/Road/Sidewalk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85778, -0.453337, -22)
+mesh = SubResource("BoxMesh_lhotq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ib3k")
+
+[node name="Cars" type="Node3D" parent="Job1"]
+
+[node name="delivery2" parent="Job1/Cars" instance=ExtResource("6_4shta")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.42791, -0.010604, 17.9273)
+
+[node name="deliveryFlat2" parent="Job1/Cars" instance=ExtResource("7_tc7k0")]
+transform = Transform3D(0.999617, 0, -0.0276774, 0, 1, 0, 0.0276774, 0, 0.999617, 2.64656, -0.010604, 7.58963)
+
+[node name="hatchbackSports2" parent="Job1/Cars" instance=ExtResource("8_8t7f3")]
+transform = Transform3D(0.999119, 0, 0.0419628, 0, 1, 0, -0.0419628, 0, 0.999119, 2.7008, -0.010604, 3.14752)
+
+[node name="sedan2" parent="Job1/Cars" instance=ExtResource("9_c5t78")]
+transform = Transform3D(-0.994494, 0, -0.104789, 0, 1, 0, 0.104789, 0, -0.994494, -4.43975, -0.010604, 8.64416)
+
+[node name="sedanSports2" parent="Job1/Cars" instance=ExtResource("10_oy7ra")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.33907, -0.010604, 3.4581)
+
+[node name="suv2" parent="Job1/Cars" instance=ExtResource("11_c28ii")]
+transform = Transform3D(-0.999048, 0, 0.0436195, 0, 1, 0, -0.0436195, 0, -0.999048, -4.25982, 0, -0.958928)
+
+[node name="suvLuxury2" parent="Job1/Cars" instance=ExtResource("12_ttw7x")]
+transform = Transform3D(-0.99604, 0, -0.0889116, 0, 1, 0, 0.0889116, 0, -0.99604, -4.49388, -0.010604, 21.5273)
+
+[node name="taxi2" parent="Job1/Cars" instance=ExtResource("13_wl8m4")]
+transform = Transform3D(-0.988751, 0, 0.14957, 0, 1, 0, -0.14957, 0, -0.988751, -4.41341, -0.010604, 25.5286)
+
+[node name="taxi3" parent="Job1/Cars" instance=ExtResource("13_wl8m4")]
+transform = Transform3D(0.99983, 0, 0.018447, 0, 1, 0, -0.0184471, 0, 0.99983, 2.46487, -0.010604, 25.5286)
+
+[node name="taxi4" parent="Job1/Cars" instance=ExtResource("13_wl8m4")]
+transform = Transform3D(0.993789, 0, -0.111278, 0, 1, 0, 0.111278, 0, 0.993789, 2.62099, -0.010604, -0.637623)
+
+[node name="truck2" parent="Job1/Cars" instance=ExtResource("14_5jbla")]
+transform = Transform3D(-0.996716, 0, -0.0809819, 0, 1, 0, 0.0809819, 0, -0.996716, -4.51034, -0.010605, 12.9477)
+
+[node name="truckFlat2" parent="Job1/Cars" instance=ExtResource("15_fag5v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.58047, -0.010604, 18.2977)
+
+[node name="van2" parent="Job1/Cars" instance=ExtResource("16_voxmv")]
+transform = Transform3D(0.9939, 0, -0.110289, 0, 1, 0, 0.110289, 0, 0.9939, 2.52554, -0.010604, 21.8331)
+
+[node name="Buildings" type="Node3D" parent="Job1"]
+
+[node name="large_buildingA2" parent="Job1/Buildings" instance=ExtResource("17_f5vo7")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, -12.7711, -0.010604, 20.3239)
+
+[node name="large_buildingC2" parent="Job1/Buildings" instance=ExtResource("18_72ugm")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, -12.1803, -0.010604, 8.10418)
+
+[node name="large_buildingE2" parent="Job1/Buildings" instance=ExtResource("19_tf24k")]
+transform = Transform3D(-3.49691e-07, 0, 8, 0, 8, 0, -8, 0, -3.49691e-07, -13.2199, -0.010604, -1.12144)
+
+[node name="large_buildingG2" parent="Job1/Buildings" instance=ExtResource("20_8n7qk")]
+transform = Transform3D(-3.49691e-07, 0, -8, 0, 8, 0, 8, 0, -3.49691e-07, 17.4377, -0.010604, 14.1067)

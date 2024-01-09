@@ -1,0 +1,54 @@
+extends VehicleBody3D
+
+@export var lights_on = false : set = set_headlights_on
+
+@export var STEER_SPEED = 1
+@export var STEER_LIMIT = 0.4
+
+@export var engine_force_value = 20
+@export var brake_force_value = 10
+
+var steer_target = 0
+
+
+func _process(delta):
+  var speed = linear_velocity.length()*Engine.get_frames_per_second()*delta
+  #traction(speed)
+  
+  var speed_steer_limit = clamp(STEER_LIMIT / (speed*0.2), 0.02, STEER_LIMIT)
+  
+  align_camera()
+  var fwd_mps = transform.basis.x.x
+  
+  steer_target = Input.get_action_strength("steer_left") - Input.get_action_strength("steer_right")
+  steer_target *= speed_steer_limit
+  
+  if Input.is_action_just_pressed("toggle_lights"):
+    set_headlights_on(!lights_on)
+
+  if Input.is_action_pressed("accelerate"):
+    engine_force = Input.get_action_strength("accelerate") * engine_force_value
+  else:
+    engine_force = 0
+    
+  if Input.is_action_pressed("brake"):
+    brake = Input.get_action_strength("brake") * brake_force_value
+  else:
+    brake = 0.0
+    
+  steering = move_toward(steering, steer_target, STEER_SPEED * delta)
+  steering = move_toward(steering, steer_target, STEER_SPEED * delta)
+  
+func set_headlights_on(value):
+  lights_on = value
+
+  for light in $Body/Headlights.get_children() + $Body/Brakelights.get_children():
+    light.visible = value
+
+  return value
+  
+func align_camera():
+  $CameraGimbal.global_position = global_position
+  
+func traction(speed):
+  apply_central_force(Vector3.DOWN*speed)

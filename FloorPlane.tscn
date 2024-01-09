@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://vryt1suwpotq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qg1dk"]
+albedo_color = Color(0.054902, 0.054902, 0.054902, 1)
+
+[node name="World" type="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.483719, 0)
+material_override = SubResource("StandardMaterial3D_qg1dk")
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2124, 0, 0)
+size = Vector3(100, 1, 100)

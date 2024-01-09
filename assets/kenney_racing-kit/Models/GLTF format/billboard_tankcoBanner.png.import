@@ -3,20 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b3mydb3765p1h"
-path="res://.godot/imported/billboard_tankcoBanner.png-4710c0712d44d88ad9880a1301407d57.ctex"
+path.s3tc="res://.godot/imported/billboard_tankcoBanner.png-4710c0712d44d88ad9880a1301407d57.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={}
 
 [deps]
 
 source_file="res://assets/kenney_racing-kit/Models/GLTF format/billboard_tankcoBanner.png"
-dest_files=["res://.godot/imported/billboard_tankcoBanner.png-4710c0712d44d88ad9880a1301407d57.ctex"]
+dest_files=["res://.godot/imported/billboard_tankcoBanner.png-4710c0712d44d88ad9880a1301407d57.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -32,4 +33,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
