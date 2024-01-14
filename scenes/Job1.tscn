@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cmbutacwxcgd8"]
+[gd_scene load_steps=35 format=3 uid="uid://cmbutacwxcgd8"]
 
 [ext_resource type="Script" path="res://scenes/Job1.gd" id="1_66hfq"]
 [ext_resource type="Script" path="res://scenes/main_menu/Lights.gd" id="2_b0ru0"]
@@ -95,6 +95,9 @@ _data = {
 "RESET": SubResource("Animation_mgsbp"),
 "title": SubResource("Animation_yycq3")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nc84v"]
+size = Vector3(1, 1.57568, 3.15198)
 
 [node name="Job1" type="Node3D"]
 script = ExtResource("1_66hfq")
@@ -572,8 +575,14 @@ libraries = {
 "": SubResource("AnimationLibrary_e6sob")
 }
 
-[node name="delivery2" parent="." instance=ExtResource("5_vcxy2")]
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.42791, -0.010604, 17.9273)
+
+[node name="delivery2" parent="RigidBody3D" instance=ExtResource("5_vcxy2")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.830322, 0.0335083)
+shape = SubResource("BoxShape3D_nc84v")
 
 [node name="deliveryFlat2" parent="." instance=ExtResource("6_1644c")]
 transform = Transform3D(0.999617, 0, -0.0276774, 0, 1, 0, 0.0276774, 0, 0.999617, 2.64656, -0.010604, 7.58963)

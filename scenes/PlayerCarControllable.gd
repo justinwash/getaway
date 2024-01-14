@@ -9,6 +9,11 @@ extends VehicleBody3D
 @export var brake_force_value = 10
 
 var steer_target = 0
+var reverse = false
+
+@onready var initial_friction_slip = $WheelRL.wheel_friction_slip
+
+@onready var initial_brake_light_brightness = $Body/Brakelights/Left.light_energy
 
 
 func _process(delta):
@@ -25,18 +30,38 @@ func _process(delta):
   
   if Input.is_action_just_pressed("toggle_lights"):
     set_headlights_on(!lights_on)
+    
+  if Input.is_action_just_pressed("shift_down"):
+    reverse = true
+  elif Input.is_action_just_pressed("shift_up"):
+    reverse = false
 
   if Input.is_action_pressed("accelerate"):
-    engine_force = Input.get_action_strength("accelerate") * engine_force_value
+    engine_force = Input.get_action_strength("accelerate") * (engine_force_value if !reverse else -engine_force_value)
   else:
     engine_force = 0
     
   if Input.is_action_pressed("brake"):
     brake = Input.get_action_strength("brake") * brake_force_value
+    for light in $Body/Brakelights.get_children():
+      light.light_energy = initial_brake_light_brightness * 2
   else:
     brake = 0.0
+    for light in $Body/Brakelights.get_children():
+      light.light_energy = initial_brake_light_brightness
     
-  steering = move_toward(steering, steer_target, STEER_SPEED * delta)
+  if Input.is_action_pressed("e_brake"):
+    brake = brake_force_value / 2
+    $WheelFL.wheel_friction_slip = initial_friction_slip / 5
+    $WheelFR.wheel_friction_slip = initial_friction_slip / 5
+    $WheelRL.wheel_friction_slip = initial_friction_slip / 10
+    $WheelRR.wheel_friction_slip = initial_friction_slip / 10
+  else:
+    $WheelFL.wheel_friction_slip = initial_friction_slip
+    $WheelFR.wheel_friction_slip = initial_friction_slip
+    $WheelRL.wheel_friction_slip = initial_friction_slip
+    $WheelRR.wheel_friction_slip = initial_friction_slip
+    
   steering = move_toward(steering, steer_target, STEER_SPEED * delta)
   
 func set_headlights_on(value):
@@ -46,6 +71,7 @@ func set_headlights_on(value):
     light.visible = value
 
   return value
+  
   
 func align_camera():
   $CameraGimbal.global_position = global_position
